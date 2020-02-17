@@ -1,0 +1,18 @@
+Input data: Tab-separated file comprising daily stock market prices for 100 assets (Input_Data_Non_Param_BootStrap.txt)
+
+Expected output
+	An output matrix of size 1000 × 100, where 1000 denotes the number of bootstraps and 100 denotes the number of assets
+	Symbols for top-5 assets 
+	Boxplots for the top-5 assets
+	Execution time
+
+Algorithm to be implemented
+1)	Read the input file and generate a matrix S of size 100 × 1500. The first row of the input file corresponds to the header and the first column contains the symbols  
+2)	Use random.seed(5000) and randint
+3)	Randomly generate B = 16 blocks of 30 contiguous days from S. That is, generate B submatrices of size 100 × 30 such that the start of each block is selected at random with replacement
+4)	For each block b (where b = 1, 2, …, B) estimate the vector (i.e., 1 × 100 array) of asset-wise returns as follows –
+i.	For each of the 100 assets, calculate log_return = log(S_last) – log(S_first), where S_last and S_first denote the asset’s stock price on the first and last day, respectively, in block b
+5)	Concatenate the B blocks to create a matrix of size B × 100 (B blocks and 100 log-returns per block)
+6)	Obtain the column sums and generate the matrix M = 1 × 100. Next, exponentiate the matrix and subtract one from each element. In other words, for each element m_i (where i = 1,2,…100) of M, obtain exp(m_i) – 1. Denote the new matrix as M_REV
+7)	Repeat steps 2 – 5 1000 times and obtain the final matrix M_Total by concatenating the M_REV matrices so that M_Total has size 1000 × 100
+8)	Use M_Total to estimate the mean value per asset and identify the top-5 assets. Next, generate the boxplots of returns for each of the top-5 assets 
