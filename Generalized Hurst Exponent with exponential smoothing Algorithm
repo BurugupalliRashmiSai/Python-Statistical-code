@@ -1,0 +1,27 @@
+	Generalized Hurst Exponent with exponential smoothing: Implement the algorithm and generate the output using the four input data sets (GHE_1.txt, …, GHE_4.txt)
+
+Formulae
+w_t  = w_0 exp(-t/θ) 			                                                                   [1]
+
+ln(K_q^w (T)) = q H(q) ln(T) + S, where S is a constant term                   [2]
+
+Algorithm to be implemented
+	Read the input data set (e.g., GHE_1.txt) and obtain a vector S, i.e. an array of size 1 × 1000 
+	Set  = 100 and q = 2
+	For T_max = 1, …, 19 [both inclusive]
+	Set T = 1000 – T_max
+	Estimate w_0=  (1- exp(-α))/(1-exp(-αT)) , where  α =1/θ 
+	Estimate W_t using equation (1) for t = 0, 1, …, (T – 1) [both inclusive]
+	For t = 0, …, (T-1) [both inclusive]
+	Obtain Nt = absolute value for S[t + T_max] – S[t]
+	Obtain Dt = absolute value of S[t]
+	Obtain 〖(N_t)〗^q and 〖(D_t)〗^q for q = 2
+	N_avg= sum[reverse(w_t)× 〖(N_t)〗^q  ]
+	D_avg= sum[reverse(w_t)× 〖(D_t)〗^q]
+	K =  N_avg/D_avg 
+	For J = 5, …, 19 [both inclusive]
+	Select the first-J values of K and T_max. Denote this set of values as KJ and TJ, respectively
+	Perform linear regression using the formula y = a + bx, where y values are ln(KJ) values, x values are ln(TJ) values, and ln denotes the natural logarithm
+	Obtain b i.e., slope of the linear regression line 
+	Obtain b_avg i.e., average value for b
+	Return the value b_avg/q
